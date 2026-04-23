@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اکاؤنٹنٹ ڈیش بورڈ - پاک ایجوکیٹ</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ffc107; /* Yellow for Accountant */
+            --sidebar-bg: #343a40;
+            --background-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --text-light: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+            --font-urdu: 'Noto Nastaliq Urdu', serif;
+            --font-eng: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: var(--background-color);
+            font-family: var(--font-eng);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+        .dashboard-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #dc3545;
+            color: var(--text-light);
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-family: var(--font-urdu);
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        h1 {
+            font-family: var(--font-urdu);
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 0;
+        }
+        #greeting {
+            font-family: var(--font-urdu);
+            font-size: 1.5rem;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+        .clock-container {
+            background-color: var(--sidebar-bg);
+            color: var(--text-light);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+        #digital-clock {
+            font-family: 'Poppins', sans-serif;
+            font-size: 4rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        #date-display {
+            font-family: var(--font-eng);
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        .main-content {
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            font-family: var(--font-urdu);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <a href="/logout" class="logout-btn">لاگ آؤٹ</a>
+        <h1>خوش آمدید، {{ username }}!</h1>
+        <p id="greeting"></p>
+        <div class="clock-container">
+            <div id="digital-clock"></div>
+            <div id="date-display"></div>
+        </div>
+        <div class="main-content">
+            <h2>اکاؤنٹنٹ کنٹرول پینل</h2>
+            <p>یہاں آپ فیس، اخراجات اور دیگر مالی امور کو منظم کر سکتے ہیں۔</p>
+        </div>
+    </div>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('digital-clock').textContent = `${hours}:${minutes}:${seconds}`;
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('date-display').textContent = now.toLocaleDateString('en-US', options);
+            const greetingEl = document.getElementById('greeting');
+            const currentHour = now.getHours();
+            let greetingText = '';
+            if (currentHour < 12) {
+                greetingText = 'صبح بخیر';
+            } else if (currentHour < 18) {
+                greetingText = 'سہ پہر بخیر';
+            } else {
+                greetingText = 'شام بخیر';
+            }
+            greetingEl.textContent = greetingText;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
