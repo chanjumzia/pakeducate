@@ -1,0 +1,8 @@
+{ pkgs }:
+{
+  packages = [
+    pkgs.python3
+    pkgs.python3Packages.flask
+    pkgs.python3Packages.sqlalchemy
+  ];
+}

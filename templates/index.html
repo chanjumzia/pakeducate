@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ڈیش بورڈ - پاک ایجوکیٹ</title>
+    
+    <!-- Google Fonts & Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --primary-hover: #0056b3;
+            --secondary-color: #6c757d;
+            --background-color: #f4f7f6;
+            --sidebar-bg: #343a40;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --text-light: #f8f9fa;
+            --border-color: #dee2e6;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Noto Nastaliq Urdu', sans-serif;
+            background-color: var(--background-color);
+            display: flex;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #4a4a4a;
+        }
+
+        .sidebar-header h2 {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 28px;
+            color: var(--primary-color);
+        }
+        .sidebar-header h2 .fa-graduation-cap {
+            margin-left: 10px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            flex-grow: 1;
+            margin-top: 20px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 18px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background: var(--primary-color);
+            color: var(--text-light);
+            border-right: 4px solid #00d9ff;
+        }
+
+        .sidebar-nav a .fa-solid {
+            font-size: 20px;
+            width: 30px;
+            margin-left: 15px;
+            text-align: center;
+        }
+
+        .logout-link {
+            margin-top: auto;
+        }
+
+        .main-content {
+            margin-right: 260px; /* Same as sidebar width */
+            width: calc(100% - 260px);
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: var(--text-color);
+        }
+
+        .user-info {
+            font-size: 16px;
+            color: var(--secondary-color);
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card .icon {
+            font-size: 40px;
+            padding: 15px;
+            border-radius: 50%;
+            margin-left: 20px;
+        }
+
+        .card .info h3 {
+            font-size: 18px;
+            color: var(--secondary-color);
+        }
+
+        .card .info p {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .card.students .icon { background-color: #e0f7ff; color: #007bff; }
+        .card.fees .icon { background-color: #e8f5e9; color: #4caf50; }
+        .card.expenses .icon { background-color: #fff3e0; color: #ff9800; }
+        .card.teachers .icon { background-color: #f3e5f5; color: #9c27b0; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(260px); /* Hide sidebar */
+            }
+            .main-content {
+                margin-right: 0;
+                width: 100%;
+            }
+            /* Add a toggle button if needed */
+        }
+
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-graduation-cap"></i>پاک ایجوکیٹ</h2>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="#" class="active"><i class="fa-solid fa-tachometer-alt"></i>ڈیش بورڈ</a></li>
+            <li><a href="#"><i class="fa-solid fa-user-graduate"></i>طلباء</a></li>
+            <li><a href="#"><i class="fa-solid fa-file-invoice-dollar"></i>فیس</a></li>
+            <li><a href="#"><i class="fa-solid fa-wallet"></i>اخراجات</a></li>
+            <li><a href="#"><i class="fa-solid fa-user-check"></i>حاضری</a></li>
+            
+            <!-- Show 'Add User' and 'Settings' only for Admin -->
+            {% if user_role == 'Admin' %}
+            <li><a href="/register"><i class="fa-solid fa-user-plus"></i>نیا صارف بنائیں</a></li>
+            <li><a href="#"><i class="fa-solid fa-cog"></i>سیٹنگز</a></li>
+            {% endif %}
+
+        </ul>
+        <div class="sidebar-nav logout-link">
+             <a href="/logout"><i class="fa-solid fa-sign-out-alt"></i>لاگ آؤٹ</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>ڈیش بورڈ</h1>
+            <div class="user-info">
+                خوش آمدید، <strong>{{ session.get('username', 'Guest') }}</strong> ({{ user_role }})
+            </div>
+        </header>
+
+        <section class="stats-cards">
+            <!-- ... stats cards remain the same ... -->
+        </section>
+
+    </main>
+
+</body>
+</html>
