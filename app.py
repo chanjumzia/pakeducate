@@ -37,8 +37,25 @@ def landing():
 def index():
     if 'user_id' not in session:
         return redirect(url_for('login'))
+
     user = User.query.get(session['user_id'])
-    return render_template('index.html', user_role=user.role if user else 'N/A')
+    if not user:
+        session.clear() # Clear invalid session
+        return redirect(url_for('login'))
+
+    role = user.role
+    username = user.username
+
+    # Render the correct dashboard based on the user's role
+    if role == 'Admin':
+        return render_template('admin_dashboard.html', username=username)
+    elif role == 'Accountant':
+        return render_template('accountant_dashboard.html', username=username)
+    elif role == 'Teacher':
+        return render_template('teacher_dashboard.html', username=username)
+    else:
+        # Fallback for unknown roles
+        return redirect(url_for('logout'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -50,6 +67,7 @@ def login():
             session['user_id'] = user.id
             session['role'] = user.role
             session['username'] = user.username
+            # On successful login, always go to the welcome page first
             return redirect(url_for('welcome'))
         else:
             show_register_link = User.query.count() == 0
@@ -65,9 +83,7 @@ def logout():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    # Authorization check: 
-    # Allow access if no users exist (for the first user)
-    # Or if the logged-in user is an Admin.
+    # Allow access if no users exist or if logged-in user is an Admin.
     if User.query.count() > 0 and session.get('role') != 'Admin':
         return redirect(url_for('login'))
 
@@ -84,14 +100,13 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         
-        # If an admin created the user, go back to index, otherwise to login.
+        # If first user, go to login. If admin created, go back to dashboard.
         if session.get('role') == 'Admin':
             return redirect(url_for('index'))
         else:
             return redirect(url_for('login'))
 
-    # For a GET request, just show the registration page.
-    # Pass message as None to avoid template errors if it's not set.
+    # For a GET request, pass message as None to avoid template errors.
     return render_template('register.html', message=None)
 
 @app.route('/welcome')
