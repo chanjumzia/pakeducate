@@ -49,14 +49,12 @@ def login():
         if user and user.check_password(password):
             session['user_id'] = user.id
             session['role'] = user.role
-            session['username'] = user.username  # <-- Storing username in session
-            return redirect(url_for('index'))
+            session['username'] = user.username
+            return redirect(url_for('welcome'))
         else:
-            # If login fails, check if the register link should still be shown
             show_register_link = User.query.count() == 0
             return render_template('login.html', error='غلط صارف نام یا پاس ورڈ', show_register_link=show_register_link)
     
-    # For GET request, decide if the registration link should be shown
     show_register_link = User.query.count() == 0
     return render_template('login.html', show_register_link=show_register_link)
 
@@ -68,7 +66,7 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        if User.query.count() > 0 and session.get('role') != 'Admin':
+        if User.query.count() > 0 and session.get('role') not in ['Admin', 'Principal']:
             return redirect(url_for('login'))
 
         username = request.form['username']
@@ -83,12 +81,12 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         
-        if session.get('role') == 'Admin':
+        if session.get('role') in ['Admin', 'Principal']:
             return redirect(url_for('index'))
         else:
             return redirect(url_for('login'))
 
-    if User.query.count() == 0 or session.get('role') == 'Admin':
+    if User.query.count() == 0 or session.get('role') in ['Admin', 'Principal']:
         return render_template('register.html')
     else:
         return redirect(url_for('login'))
@@ -97,7 +95,7 @@ def register():
 def welcome():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    return render_template('welcome.html')
+    return render_template('welcome.html', username=session.get('username'))
 
 if __name__ == '__main__':
     with app.app_context():
