@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>خوش آمدید - پاک ایجوکیٹ</title>
 
-    <!-- Google Fonts & Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary-color: #e74c3c; /* Red-Orange from button */
-            --primary-hover: #c0392b;
-            --secondary-color: #2c3e50; /* Dark Blue-Gray */
+            --primary-color: #d35400; /* A more vibrant orange */
+            --primary-hover: #e67e22;
+            --secondary-color: #2c3e50;
             --text-light: #ffffff;
-            --background-light: #f8f9fa;
+            --background-light: #fdfefe;
             --font-urdu: 'Noto Nastaliq Urdu', serif;
             --font-eng: 'Poppins', sans-serif;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         body {
@@ -26,6 +26,7 @@
             padding: 0;
             background-color: var(--background-light);
             color: var(--secondary-color);
+            overflow-x: hidden;
         }
 
         .container {
@@ -34,14 +35,31 @@
             margin: auto;
         }
 
-        /* Header & Navigation */
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .animated {
+            animation-duration: 0.7s;
+            animation-fill-mode: both;
+        }
+
+        /* Header */
         .main-header {
             background: var(--text-light);
             padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             position: sticky;
             top: 0;
             z-index: 1000;
+            animation: fadeIn 1s;
         }
 
         .main-nav {
@@ -51,7 +69,7 @@
         }
 
         .logo {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 700;
             color: var(--secondary-color);
             text-decoration: none;
@@ -62,120 +80,167 @@
             display: flex;
             list-style: none;
         }
-
-        .nav-links li {
-            margin-right: 25px;
-        }
-
+        .nav-links li { margin-right: 30px; }
         .nav-links a {
             text-decoration: none;
             color: var(--secondary-color);
-            font-size: 18px;
             font-family: var(--font-urdu);
+            font-size: 18px;
+            position: relative;
+            padding-bottom: 5px;
             transition: color 0.3s;
         }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.4s ease-out;
         }
+        .nav-links a:hover { color: var(--primary-color); }
+        .nav-links a:hover::after { width: 100%; }
 
         /* Hero Section */
         .hero-section {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-image: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.8)), url('https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
             background-size: cover;
             background-position: center;
             color: var(--text-light);
             text-align: center;
-            padding: 120px 0;
+            padding: 140px 0;
+            animation: fadeIn 1s;
         }
-
         .hero-section h1 {
             font-family: var(--font-urdu);
-            font-size: 4rem;
+            font-size: 4.5rem;
             margin-bottom: 10px;
+            animation: slideInUp 0.8s;
         }
         .hero-section h1 span {
             font-family: var(--font-eng);
             font-weight: 700;
             color: var(--primary-color);
         }
-
         .hero-section p {
             font-family: var(--font-urdu);
-            font-size: 1.5rem;
-            margin-bottom: 30px;
+            font-size: 1.6rem;
+            margin-bottom: 40px;
+            animation: slideInUp 1s;
         }
-
         .btn {
             background-color: var(--primary-color);
             color: var(--text-light);
-            padding: 12px 30px;
+            padding: 15px 35px;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 50px;
             font-size: 1.2rem;
             font-family: var(--font-urdu);
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(211, 84, 0, 0.4);
         }
-
         .btn:hover {
             background-color: var(--primary-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(211, 84, 0, 0.6);
         }
 
-        /* About/Instructor Section */
-        .about-section {
-            padding: 80px 0;
+        /* Sections */
+        .section {
+            padding: 90px 0;
             text-align: center;
-        }
-        .instructor-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 5px solid var(--primary-color);
-            object-fit: cover;
-            margin-bottom: 20px;
         }
         .section-title {
             font-family: var(--font-urdu);
-            font-size: 2.8rem;
-            margin-bottom: 40px;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
         }
 
-        /* Courses Section */
-        .courses-section {
-            padding: 60px 0;
-            text-align: center;
-        }
-
-        .courses-grid {
+        /* Features Section */
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
             margin-top: 40px;
         }
-
-        .course-card {
+        .feature-card {
             background: var(--text-light);
-            padding: 40px 20px;
-            border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            padding: 40px 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
-        .course-card:hover {
+        .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
-
-        .course-card .icon {
+        .feature-card .icon {
             font-size: 3.5rem;
             color: var(--primary-color);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
-
-        .course-card h3 {
+        .feature-card h3 {
             font-family: var(--font-urdu);
             font-size: 1.8rem;
             color: var(--secondary-color);
+        }
+        .feature-card p {
+             font-family: var(--font-urdu);
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+            padding: 60px 0 20px 0;
+            font-family: var(--font-urdu);
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        .footer-section h4 {
+            font-family: var(--font-urdu);
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .footer-section p, .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+            line-height: 1.8;
+        }
+        .footer-section a:hover { color: var(--primary-color); }
+        .social-links a {
+            margin-left: 15px;
+            font-size: 1.5rem;
+        }
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            font-size: 0.9rem;
         }
 
     </style>
@@ -203,26 +268,72 @@
             </div>
         </section>
 
-        <section class="about-section container">
-            <!-- This is where the instructor image was. I am using it for the courses title -->
-            <h2 class="section-title">ہمارے مقبول کورسز</h2>
-            <div class="courses-grid">
-                 <div class="course-card">
-                    <div class="icon"><i class="fas fa-code"></i></div>
-                    <h3>ویب ڈویلپمنٹ</h3>
+        <section class="section container features-section" id="features">
+            <h2 class="section-title">ہماری خصوصیات</h2>
+            <div class="features-grid">
+                 <div class="feature-card animated">
+                    <div class="icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h3>ماہر اساتذہ</h3>
+                    <p>صنعت کے ماہرین سے سیکھیں جو آپ کی کامیابی کے لیے پرعزم ہیں۔</p>
                 </div>
-                <div class="course-card">
-                    <div class="icon"><i class="fas fa-paint-brush"></i></div>
-                    <h3>گرافک ڈیزائننگ</h3>
+                <div class="feature-card animated">
+                    <div class="icon"><i class="fas fa-book-open"></i></div>
+                    <h3>جدید نصاب</h3>
+                     <p>جدید ترین ٹیکنالوجیز اور مہارتوں پر مشتمل ہمارا نصاب۔</p>
                 </div>
-                <div class="course-card">
-                    <div class="icon"><i class="fas fa-bullhorn"></i></div>
-                    <h3>ڈیجیٹل مارکیٹنگ</h3>
+                <div class="feature-card animated">
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <h3>کمیونٹی سپورٹ</h3>
+                    <p>سیکھنے والوں کی ایک فعال کمیونٹی کے ساتھ مشغول ہوں اور تعاون کریں۔</p>
                 </div>
             </div>
         </section>
 
     </main>
+    
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Pak<span>Educate</span></h4>
+                    <p>ایک بہتر مستقبل کی تعمیر کے لیے معیاری تعلیم فراہم کرنے کا ایک پلیٹ فارم۔</p>
+                </div>
+                <div class="footer-section">
+                    <h4>فوری لنکس</h4>
+                    <a href="#">کورسز</a><br>
+                    <a href="#">ہمارے بارے میں</a><br>
+                    <a href="#">رابطہ</a>
+                </div>
+                <div class="footer-section">
+                    <h4>ہمیں فالو کریں</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PakEducate. تمام حقوق محفوظ ہیں۔</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Animations
+        const animatedElements = document.querySelectorAll('.animated');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('slideInUp');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animatedElements.forEach(el => {
+            observer.observe(el);
+        });
+    </script>
 
 </body>
 </html>

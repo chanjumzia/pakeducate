@@ -1,70 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>خوش آمدید - پاک ایجوکیٹ</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --text-light: #ffffff;
+            --font-urdu: 'Noto Nastaliq Urdu', serif;
+            --font-eng: 'Poppins', sans-serif;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
 
         body {
-            background-color: #f0f8ff;
-            font-family: 'Arial', sans-serif;
+            font-family: var(--font-eng);
+            margin: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            overflow: hidden;
+            color: var(--text-light);
             text-align: center;
-            color: #333;
         }
-        .welcome-container {
-            background-color: #fff;
-            padding: 40px;
+
+        .welcome-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 50px;
             border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        .welcome-message {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .clock-container {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-        .date-container {
-            font-size: 1.5em;
-            margin-bottom: 30px;
-        }
-        .action-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .action-button:hover {
-            background-color: #45a049;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 90%;
+            max-width: 500px;
+            animation: fadeIn 1s ease-in-out, slideInUp 0.8s ease-in-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
+        @keyframes slideInUp {
+            from { transform: translateY(30px); }
+            to { transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: var(--font-urdu);
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-family: var(--font-urdu);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .clock-container {
+            font-family: var(--font-eng);
+            font-size: 4rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .date-container {
+            font-family: var(--font-eng);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            background-color: var(--text-light);
+            color: var(--secondary-color);
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-family: var(--font-urdu);
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background-color: #f1c40f;
+            color: #2c3e50;
+            transform: translateY(-3px);
+        }
+
     </style>
 </head>
 <body>
-    <div class="welcome-container">
-        <div class="welcome-message">Welcome {{ username }} to Pak Education System</div>
+    <div class="welcome-card">
+        <h1>خوش آمدید، {{ username }}!</h1>
+        <p>آپ پاک ایجوکیشن سسٹم میں کامیابی سے لاگ ان ہو گئے ہیں۔</p>
         <div id="clock" class="clock-container"></div>
         <div id="date" class="date-container"></div>
-        <button class="action-button" onclick="goToWorkArea()">Go to Work Area</button>
+        <a href="{{ url_for('index') }}" class="btn">ڈیش بورڈ پر جائیں</a>
     </div>
 
     <script>
@@ -77,10 +116,6 @@
 
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
-        }
-
-        function goToWorkArea() {
-            window.location.href = "{{ url_for('index') }}";
         }
 
         setInterval(updateTime, 1000);

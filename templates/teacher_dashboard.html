@@ -4,131 +4,240 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ٹیچر ڈیش بورڈ - پاک ایجوکیٹ</title>
+    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
-            --primary-color: #28a745; /* Green for Teacher */
-            --sidebar-bg: #343a40;
-            --background-color: #f4f7f6;
+            --primary-color: #27ae60; /* A fresh, educational green */
+            --secondary-color: #2c3e50;
+            --sidebar-bg: #2c3e50;
+            --background-color: #ecf0f1;
             --card-bg: #ffffff;
-            --text-color: #333;
-            --text-light: #f8f9fa;
-            --shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+            --text-color: #34495e;
+            --text-light: #ecf0f1;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             --font-urdu: 'Noto Nastaliq Urdu', serif;
             --font-eng: 'Poppins', sans-serif;
         }
+
         body {
             background-color: var(--background-color);
             font-family: var(--font-eng);
             margin: 0;
-            padding: 20px;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
             min-height: 100vh;
             color: var(--text-color);
         }
-        .dashboard-container {
-            width: 100%;
-            max-width: 900px;
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            position: relative;
-        }
-        .logout-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: #dc3545;
-            color: var(--text-light);
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            font-family: var(--font-urdu);
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        h1 {
-            font-family: var(--font-urdu);
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 0;
-        }
-        #greeting {
-            font-family: var(--font-urdu);
-            font-size: 1.5rem;
-            margin-top: 5px;
-            margin-bottom: 20px;
-        }
-        .clock-container {
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
             background-color: var(--sidebar-bg);
             color: var(--text-light);
-            border-radius: 10px;
             padding: 20px;
-            margin: 20px auto;
-            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
         }
-        #digital-clock {
-            font-family: 'Poppins', sans-serif;
-            font-size: 4rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-        }
-        #date-display {
+
+        .sidebar-header h2 {
             font-family: var(--font-eng);
-            font-size: 1.2rem;
-            margin-top: 10px;
+            font-weight: 700;
+            font-size: 2rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 30px;
         }
-        .main-content {
-            margin-top: 40px;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
+        .sidebar-header span { color: var(--primary-color); }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: var(--text-light);
+            text-decoration: none;
             font-family: var(--font-urdu);
+            font-size: 1.1rem;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s, color 0.3s;
         }
+        .sidebar-nav a i { margin-left: 15px; width: 20px; text-align: center; }
+        .sidebar-nav a.active, .sidebar-nav a:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .logout-btn { margin-top: auto; }
+
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            margin-right: 260px;
+            padding: 30px;
+        }
+
+        .header h1 {
+            font-family: var(--font-urdu);
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+        }
+        
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .welcome-section h2 {
+            font-family: var(--font-urdu);
+            font-size: 2rem;
+        }
+
+        .tool-section {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+        .tool-section h3 {
+            font-family: var(--font-urdu);
+            font-size: 1.7rem;
+            color: var(--secondary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-family: var(--font-urdu);
+            font-size: 1rem;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-family: var(--font-eng);
+            direction: ltr;
+            text-align: right;
+        }
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: var(--font-urdu);
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+        .btn:hover { background-color: #2ecc71; }
+
+        .student-data {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 20px;
+            border-radius: 5px;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <a href="/logout" class="logout-btn">لاگ آؤٹ</a>
-        <h1>خوش آمدید، {{ username }}!</h1>
-        <p id="greeting"></p>
-        <div class="clock-container">
-            <div id="digital-clock"></div>
-            <div id="date-display"></div>
+
+    <div class="sidebar">
+        <div class="sidebar-header"><h2>Pak<span>Educate</span></h2></div>
+        <nav class="sidebar-nav">
+            <a href="#" class="active"><i class="fas fa-tachometer-alt"></i>ڈیش بورڈ</a>
+            <a href="#"><i class="fas fa-search"></i>طالب علم تلاش کریں</a>
+            <a href="#"><i class="fas fa-user-plus"></i>طالب علم شامل کریں</a>
+            <a href="#"><i class="fas fa-tasks"></i>ٹاسک اپلوڈ کریں</a>
+        </nav>
+        <div class="logout-btn"><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i>لاگ آؤٹ</a></div>
+    </div>
+
+    <div class="main-content">
+        <header class="header"><h1>ٹیچر ڈیش بورڈ</h1></header>
+
+        <div class="welcome-section"><h2>خوش آمدید، {{ username }}!</h2></div>
+
+        <div id="search-student" class="tool-section">
+            <h3><i class="fas fa-search"></i> طالب علم تلاش کریں</h3>
+            <div class="form-group">
+                <label for="studentId">طالب علم ID</label>
+                <input type="text" id="studentId" placeholder="ID درج کریں">
+            </div>
+            <button class="btn" onclick="searchStudent()">تلاش کریں</button>
+            <div class="student-data" id="studentData" style="display: none; margin-top: 20px;"></div>
         </div>
-        <div class="main-content">
-            <h2>ٹیچر کنٹرول پینل</h2>
-            <p>یہاں آپ طلباء کی حاضری لگا سکتے ہیں اور دیگر متعلقہ کام انجام دے سکتے ہیں۔</p>
+
+        <div id="add-student" class="tool-section">
+            <h3><i class="fas fa-user-plus"></i> نیا طالب علم شامل کریں</h3>
+            <form onsubmit="addStudent(event)">
+                <div class="form-group">
+                    <label for="newName">نام</label>
+                    <input type="text" id="newName" required>
+                </div>
+                <!-- Add more fields as needed -->
+                <button type="submit" class="btn">شامل کریں</button>
+            </form>
+        </div>
+
+        <div id="upload-task" class="tool-section">
+            <h3><i class="fas fa-tasks"></i> نیا ٹاسک اپ لوڈ کریں</h3>
+            <form onsubmit="uploadTask(event)">
+                <div class="form-group">
+                    <label for="taskTitle">ٹاسک کا عنوان</label>
+                    <input type="text" id="taskTitle" required>
+                </div>
+                 <div class="form-group">
+                    <label for="taskDescription">تفصیل</label>
+                    <textarea id="taskDescription" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn">اپ لوڈ کریں</button>
+            </form>
         </div>
     </div>
+
     <script>
-        function updateClock() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('digital-clock').textContent = `${hours}:${minutes}:${seconds}`;
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('date-display').textContent = now.toLocaleDateString('en-US', options);
-            const greetingEl = document.getElementById('greeting');
-            const currentHour = now.getHours();
-            let greetingText = '';
-            if (currentHour < 12) {
-                greetingText = 'صبح بخیر';
-            } else if (currentHour < 18) {
-                greetingText = 'سہ پہر بخیر';
-            } else {
-                greetingText = 'شام بخیر';
-            }
-            greetingEl.textContent = greetingText;
+        function searchStudent() {
+            const studentId = document.getElementById('studentId').value;
+            if (!studentId) { alert('براہ کرم طالب علم ID درج کریں'); return; }
+            
+            const student = { name: 'محمد علی', fatherName: 'احمد علی', class: 'دہم', fee: { status: 'Unpaid', amount: '500 PKR' } };
+            const studentDataDiv = document.getElementById('studentData');
+            studentDataDiv.innerHTML = `<p><strong>نام:</strong> ${student.name}</p><p><strong>والد کا نام:</strong> ${student.fatherName}</p><p><strong>کلاس:</strong> ${student.class}</p><p><strong>فیس:</strong> ${student.fee.status} (${student.fee.amount})</p>`;
+            studentDataDiv.style.display = 'block';
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+
+        function addStudent(event) {
+            event.preventDefault();
+            alert('نیا طالب علم شامل کر دیا گیا ہے۔');
+            event.target.reset();
+        }
+
+        function uploadTask(event) {
+            event.preventDefault();
+            alert('نیا ٹاسک اپ لوڈ کر دیا گیا ہے۔');
+            event.target.reset();
+        }
     </script>
+
 </body>
 </html>
