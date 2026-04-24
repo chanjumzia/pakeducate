@@ -19,6 +19,16 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
     role = db.Column(db.String(50), nullable=False)
+    
+    # New fields for detailed user information
+    full_name = db.Column(db.String(120), nullable=True)
+    father_name = db.Column(db.String(120), nullable=True)
+    cnic = db.Column(db.String(15), nullable=True, unique=True)
+    phone = db.Column(db.String(15), nullable=True)
+    email = db.Column(db.String(120), nullable=True, unique=True)
+    address = db.Column(db.String(250), nullable=True)
+    marital_status = db.Column(db.String(20), nullable=True)
+
     def set_password(self, password): self.password_hash = generate_password_hash(password)
     def check_password(self, password): return check_password_hash(self.password_hash, password)
 
@@ -49,6 +59,9 @@ def index():
     # Render the correct dashboard based on the user's role
     if role == 'Admin':
         return render_template('admin_dashboard.html', username=username)
+    # ADDED: Principal role routing
+    elif role == 'Principal':
+        return render_template('admin_dashboard.html', username=username) # Can have a separate dashboard later
     elif role == 'Accountant':
         return render_template('accountant_dashboard.html', username=username)
     elif role == 'Teacher':
@@ -83,8 +96,9 @@ def logout():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    # Allow access if no users exist or if logged-in user is an Admin.
-    if User.query.count() > 0 and session.get('role') != 'Admin':
+    # Allow access if no users exist or if logged-in user is an Admin/Principal.
+    allowed_roles = ['Admin', 'Principal']
+    if User.query.count() > 0 and session.get('role') not in allowed_roles:
         return redirect(url_for('login'))
 
     if request.method == 'POST':
@@ -92,21 +106,45 @@ def register():
         password = request.form['password']
         role = request.form['role']
 
+        # New fields from the form
+        full_name = request.form['full_name']
+        father_name = request.form['father_name']
+        cnic = request.form['cnic']
+        phone = request.form['phone']
+        email = request.form['email']
+        address = request.form['address']
+        marital_status = request.form['marital_status']
+
+        # Check for existing username, email, or CNIC
         if User.query.filter_by(username=username).first():
             return render_template('register.html', message='یہ صارف نام پہلے سے موجود ہے')
+        if User.query.filter(User.email.isnot(None)).filter_by(email=email).first():
+            return render_template('register.html', message='یہ ای میل پہلے سے موجود ہے')
+        if User.query.filter(User.cnic.isnot(None)).filter_by(cnic=cnic).first():
+            return render_template('register.html', message='یہ شناختی کارڈ نمبر پہلے سے موجود ہے')
 
-        new_user = User(username=username, role=role)
+        new_user = User(
+            username=username, 
+            role=role,
+            full_name=full_name,
+            father_name=father_name,
+            cnic=cnic,
+            phone=phone,
+            email=email,
+            address=address,
+            marital_status=marital_status
+        )
         new_user.set_password(password)
         db.session.add(new_user)
         db.session.commit()
         
-        # If first user, go to login. If admin created, go back to dashboard.
-        if session.get('role') == 'Admin':
-            return redirect(url_for('index'))
-        else:
+        # If admin/principal created the user, go back to their dashboard.
+        if session.get('role') in allowed_roles:
+            # We will later add a success message here
+            return redirect(url_for('index')) 
+        else: # First user registration
             return redirect(url_for('login'))
 
-    # For a GET request, pass message as None to avoid template errors.
     return render_template('register.html', message=None)
 
 @app.route('/welcome')
@@ -115,7 +153,12 @@ def welcome():
         return redirect(url_for('login'))
     return render_template('welcome.html', username=session.get('username'))
 
+# The create_all call should be handled by a separate script now.
+# We will not run it directly in app.py anymore for production safety.
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
+    # Note: For development, you might still want db.create_all() here.
+    # with app.app_context():
+    #     db.create_all()
     app.run(debug=True, port=5000)
+
