@@ -65,10 +65,13 @@ def logout():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        if User.query.count() > 0 and session.get('role') not in ['Admin', 'Principal']:
-            return redirect(url_for('login'))
+    # Authorization check: 
+    # Allow access if no users exist (for the first user)
+    # Or if the logged-in user is an Admin.
+    if User.query.count() > 0 and session.get('role') != 'Admin':
+        return redirect(url_for('login'))
 
+    if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         role = request.form['role']
@@ -81,15 +84,15 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         
-        if session.get('role') in ['Admin', 'Principal']:
+        # If an admin created the user, go back to index, otherwise to login.
+        if session.get('role') == 'Admin':
             return redirect(url_for('index'))
         else:
             return redirect(url_for('login'))
 
-    if User.query.count() == 0 or session.get('role') in ['Admin', 'Principal']:
-        return render_template('register.html')
-    else:
-        return redirect(url_for('login'))
+    # For a GET request, just show the registration page.
+    # Pass message as None to avoid template errors if it's not set.
+    return render_template('register.html', message=None)
 
 @app.route('/welcome')
 def welcome():
