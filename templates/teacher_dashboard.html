@@ -22,6 +22,10 @@
             --font-eng: 'Poppins', sans-serif;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--background-color);
             font-family: var(--font-eng);
@@ -74,6 +78,21 @@
         }
 
         .logout-btn { margin-top: auto; }
+        .logout-btn a {
+             display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-family: var(--font-urdu);
+            font-size: 1.1rem;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .logout-btn a:hover {
+            background-color: #c0392b;
+        }
 
         /* Main Content */
         .main-content {
@@ -165,9 +184,9 @@
         <div class="sidebar-header"><h2>Pak<span>Educate</span></h2></div>
         <nav class="sidebar-nav">
             <a href="#" class="active"><i class="fas fa-tachometer-alt"></i>ڈیش بورڈ</a>
-            <a href="#"><i class="fas fa-search"></i>طالب علم تلاش کریں</a>
-            <a href="#"><i class="fas fa-user-plus"></i>طالب علم شامل کریں</a>
-            <a href="#"><i class="fas fa-tasks"></i>ٹاسک اپلوڈ کریں</a>
+            <a href="#search-student"><i class="fas fa-search"></i>طالب علم تلاش کریں</a>
+            <a href="#add-student"><i class="fas fa-user-plus"></i>طالب علم شامل کریں</a>
+            <a href="#upload-task"><i class="fas fa-tasks"></i>ٹاسک اپلوڈ کریں</a>
         </nav>
         <div class="logout-btn"><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i>لاگ آؤٹ</a></div>
     </div>
