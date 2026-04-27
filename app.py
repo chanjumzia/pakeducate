@@ -65,7 +65,7 @@ def index():
     elif role == 'Accountant':
         return render_template('accountant_dashboard.html', username=username)
     elif role == 'Teacher':
-        return render_template('teacher_dashboard.html', username=username)
+        return render_template('teacher_panel.html', username=username)
     else:
         # Fallback for unknown roles
         return redirect(url_for('logout'))
@@ -161,4 +161,3 @@ if __name__ == '__main__':
     # with app.app_context():
     #     db.create_all()
     app.run(debug=True, port=5000)
-

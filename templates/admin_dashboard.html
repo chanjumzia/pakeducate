@@ -33,7 +33,7 @@
 
         /* Sidebar */
         .sidebar {
-            width: 260px;
+            width: 300px; /* INCREASED width */
             background-color: var(--sidebar-bg);
             color: var(--text-light);
             padding: 20px;
@@ -43,6 +43,7 @@
             top: 0;
             right: 0;
             bottom: 0;
+            box-sizing: border-box;
         }
 
         .sidebar-header {
@@ -60,7 +61,7 @@
         .sidebar-nav a {
             display: flex;
             align-items: center;
-            padding: 12px 15px;
+            padding: 15px 25px; /* INCREASED padding */
             color: var(--text-light);
             text-decoration: none;
             font-family: var(--font-urdu);
@@ -86,8 +87,8 @@
         /* Main Content */
         .main-content {
             flex-grow: 1;
-            margin-right: 260px; /* Same as sidebar width */
-            padding: 30px;
+            margin-right: 300px; /* Match sidebar width */
+            padding: 50px;
         }
 
         .header {
