@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ایڈمن سیٹنگز - پاک ایجوکیٹ</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Pak<span>Educate</span></h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{{ url_for('admin_dashboard') }}"><i class="fas fa-tachometer-alt"></i>ڈیش بورڈ</a>
+            <a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i>صارف شامل کریں</a>
+            <a href="#"><i class="fas fa-users-cog"></i>صارفین کا انتظام</a>
+            <a href="{{ url_for('admin_settings') }}" class="active"><i class="fas fa-cogs"></i>سیٹنگز</a>
+        </nav>
+        <div class="logout-btn">
+            <a href="{{ url_for('logout') }}" class="sidebar-nav-item"><i class="fas fa-sign-out-alt"></i>لاگ آؤٹ</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header class="header">
+            <h1>ایڈمن سیٹنگز</h1>
+        </header>
+
+        <div class="settings-container">
+            <!-- User Management -->
+            <div class="settings-card">
+                <h2>صارفین کا انتظام</h2>
+                <div class="settings-item">
+                    <p>یہاں سے آپ صارفین کو حذف، ان کی تفصیلات میں ترمیم، اور ان کے اختیارات تبدیل کر سکتے ہیں۔</p>
+                    <a href="#" class="btn">صارفین کا انتظام کریں</a>
+                </div>
+            </div>
+
+            <!-- Student Management -->
+            <div class="settings-card">
+                <h2>طلباء کا انتظام</h2>
+                <div class="settings-item">
+                    <p>یہاں سے آپ طلباء کی مکمل تفصیلات اور پروفائل دیکھ سکتے ہیں۔</p>
+                    <a href="#" class="btn">طلباء کی تفصیلات دیکھیں</a>
+                </div>
+            </div>
+
+            <!-- Fee Management -->
+            <div class="settings-card">
+                <h2>فیس کا انتظام</h2>
+                <div class="settings-item">
+                    <p>یہاں سے آپ طلباء کی جمع شدہ فیس دیکھ سکتے ہیں۔ پرنسپل کی منظوری کے بغیر فیس میں ترمیم یا حذف نہیں کیا جا سکتا۔</p>
+                    <a href="#" class="btn">فیس کی تفصیلات دیکھیں</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
